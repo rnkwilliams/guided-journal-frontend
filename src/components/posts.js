@@ -8,7 +8,7 @@ class Posts {
 
     fetchAndLoadPosts() {
         this.adapter.getPosts().then(posts => {
-            posts.forEach(post => this.posts.push(post))
+            posts.forEach(post => this.posts.push(new Post(post)))
         })
             .then(() => {
                 this.render()
@@ -17,6 +17,6 @@ class Posts {
 
     render() {
         const postsContainer = document.querySelector('#posts-container')
-        postsContainer.innerHTML = 'All Posts'
+        postsContainer.innerHTML = this.posts.map(post => `<li>${post.content1} ${post.content2} ${post.content3}</li>`).join('')
     }
 }
