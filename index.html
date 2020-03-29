@@ -24,24 +24,25 @@
         </div> -->
         <div>
             <form id="newpost-form">
-                <select id="category-list">
-                    <option value="daily_life">Daily Life</option>
-                    <option value="self_care">Self Care</option>
-                    <option value="goal_setting">Goal Setting</option>
+                <select name="categories" id="category_list">
+                    <option value="">--Please choose an option--</option>
+                    <option value="1">Daily Life</option>
+                    <option value="2">Self Care</option>
+                    <option value="3">Goal Setting</option>
                 </select>
                 <!-- <label>Date: </label>
                 <input type="text" name="date" id="date"><br><br> -->
                 <fieldset>
                     <legend>I am grateful for: </legend>
-                    <textarea name="content1" maxlength="200" rows="4" id="content1" category-id="1"></textarea></br>
+                    <textarea name="content1" maxlength="200" rows="4" id="content1"></textarea></br>
                 </fieldset>
                 <fieldset>
                     <legend>Daily Affirmation </legend>
-                    <textarea name="content2" maxlength="200" rows="4" id="content2" category-id="1"></textarea></br>
+                    <textarea name="content2" maxlength="200" rows="4" id="content2"></textarea></br>
                 </fieldset>
                 <fieldset>
                     <legend>How could I have made today better? </legend>
-                    <textarea name="content3" maxlength="200" rows="4" id="content3" category-id="1"></textarea></br>
+                    <textarea name="content3" maxlength="200" rows="4" id="content3"></textarea></br>
                 </fieldset>
                 <input type="submit" value="Submit">
             </form>

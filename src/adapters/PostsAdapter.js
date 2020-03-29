@@ -8,9 +8,9 @@ class PostsAdapter {
         )
     }
 
-    createPost(categoryId, value1, value2, value3) {
+    createPost(selfCare, value1, value2, value3) {
         const post = {
-            category_id: categoryId,
+            category_id: selfCare,
             content1: value1,
             content2: value2,
             content3: value3,
