@@ -11,7 +11,7 @@ class Posts {
         this.newPostContent1 = document.querySelector('#content1')
         this.newPostContent2 = document.querySelector('#content2')
         this.newPostContent3 = document.querySelector('#content3')
-        this.selfCare = document.querySelectorAll('option')[2]
+        this.selfCare = document.querySelector('#categories').options[0].selected = true;
         //console.log(this.selfCare)
 
         this.postForm = document.querySelector('#newpost-form')
@@ -36,7 +36,8 @@ class Posts {
 
     fetchAndLoadPosts() {
         this.adapter.getPosts().then(posts => {
-            posts.forEach(post => this.posts.push(new Post(post)))
+            console.log(posts.data.forEach(post => post.attributes.content1))
+            //posts.data.forEach(post => this.posts.push(new Post(post)))
         })
             .then(() => {
                 this.render()
