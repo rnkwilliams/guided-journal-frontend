@@ -34,14 +34,15 @@ class Posts {
         })
     }
 
+    // INITIAL FETCH
     fetchAndLoadPosts() {
         this.adapter.getPosts().then(posts => {
-            console.log(posts.data.forEach(post => post.attributes.content1))
-            //posts.data.forEach(post => this.posts.push(new Post(post)))
-        })
-            .then(() => {
-                this.render()
+            posts.data.forEach(post => {
+                let newPost = new Post(post)
+                //console.log(newPost)
+                this.postsContainer.innerHTML += newPost.renderLi()
             })
+        })
     }
 
     render() {
