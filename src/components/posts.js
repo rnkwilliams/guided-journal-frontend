@@ -12,19 +12,35 @@ class Posts {
         this.newPostContent2 = document.querySelector('#content2')
         this.newPostContent3 = document.querySelector('#content3')
 
+        this.select = document.getElementById('categories')
+        this.select.addEventListener('change', this.selectHandler.bind(this))
+
         this.postForm = document.querySelector('#newpost-form')
         this.postForm.addEventListener('submit', this.createPost.bind(this))
     }
 
+    selectHandler(e) {
+        const categoryId = e.target.value
+        //console.log(categoryId)
+        if (categoryId == '2') {
+            this.postForm.innerHTML = Post.renderSelfCare();
+        } else if (categoryId == '1') {
+            this.postForm.innerHTML = Post.renderDailyCare();
+        } else {
+            //console.log(Post.renderGoal())
+            this.postForm.innerHTML = Post.renderGoal();
+        }
+    }
+
     createPost(e) {
         e.preventDefault()
-        let select = document.getElementById('categories')
-        const selfCare = select.options[select.selectedIndex].value
+        //let select = document.getElementById('categories')
+        //const selectCat = this.select.options[this.select.selectedIndex].value
         const value1 = this.newPostContent1.value
         const value2 = this.newPostContent2.value
         const value3 = this.newPostContent3.value
 
-        this.adapter.createPost(selfCare, value1, value2, value3).then(post => {
+        this.adapter.createPost(selectCat, value1, value2, value3).then(post => {
             this.posts.push(new Post(post))
             this.newPostContent1.value = ''
             this.newPostContent2.value = ''
@@ -38,8 +54,8 @@ class Posts {
         this.adapter.getPosts().then(posts => {
             //console.log(posts.data)
             posts.data.forEach(post => {
-                let thePost = post.attributes
-                let newPost = new Post(thePost)
+                const thePost = post.attributes
+                const newPost = new Post(thePost)
                 //console.log(newPost)
                 this.postsContainer.innerHTML += newPost.renderLi()
             })
