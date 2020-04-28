@@ -15,8 +15,8 @@ class Post {
     }
 
     static renderSelfCare() {
-        return `<fieldset id="self">
-            <legend>I am grateful for me: </legend>
+        return `<fieldset>
+            <legend>I am grateful for: </legend>
             <textarea name="content1" maxlength="200" rows="4" id="content1"></textarea>
             </fieldset>
             <fieldset>
