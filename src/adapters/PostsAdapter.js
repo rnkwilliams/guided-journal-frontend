@@ -8,8 +8,9 @@ class PostsAdapter {
         )
     }
 
-    createPost(value1, value2, value3) {
+    createPost(categoryId, value1, value2, value3) {
         const post = {
+            category_id: categoryId,
             content1: value1,
             content2: value2,
             content3: value3,

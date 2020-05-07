@@ -17,56 +17,55 @@ class Posts {
         this.select.addEventListener('change', this.selectHandler.bind(this))
 
         this.postForm = document.querySelector('#newpost-form')
-        this.postForm.addEventListener('submit', this.createPost.bind(this))
     }
 
+    // EVENT LISTENER FOR RENDERING A SPECIFIC FORM BASED ON CATEGORY CHOSEN
     selectHandler(e) {
         const categoryId = e.target.value
         //console.log(categoryId)
         if (categoryId == '2') {
             this.postForm.innerHTML = Post.renderSelfCare();
-            const value1 = document.querySelector('#content1')
-            //console.log(value1.value)
-            const value2 = document.querySelector('#content2')
-            const value3 = document.querySelector('#content3')
-            this.postForm.addEventListener('submit', this.createPost(value1, value2, value3))
+            this.postForm.addEventListener('submit', (e) => {
+                e.preventDefault()
+                const value1 = document.querySelector('#content1').value
+                const value2 = document.querySelector('#content2').value
+                const value3 = document.querySelector('#content3').value
+                this.createPost(categoryId, value1, value2, value3)
+            })
+
         } else if (categoryId == '1') {
             this.postForm.innerHTML = Post.renderDailyCare();
-            const value1 = document.querySelector('#content1')
-            const value2 = document.querySelector('#content2')
-            const value3 = document.querySelector('#content3')
-            this.postForm.addEventListener('submit', this.createPost(value1, value2, value3))
+            this.postForm.addEventListener('submit', (e) => {
+                e.preventDefault()
+                const value1 = document.querySelector('#content1').value
+                const value2 = document.querySelector('#content2').value
+                const value3 = document.querySelector('#content3').value
+                this.createPost(categoryId, value1, value2, value3)
+            })
         } else {
             this.postForm.innerHTML = Post.renderGoal();
-            const value1 = document.querySelector('#content1')
-            const value2 = document.querySelector('#content2')
-            const value3 = document.querySelector('#content3')
-            this.postForm.addEventListener('submit', this.createPost(value1, value2, value3))
+            this.postForm.addEventListener('submit', (e) => {
+                e.preventDefault()
+                const value1 = document.querySelector('#content1').value
+                const value2 = document.querySelector('#content2').value
+                const value3 = document.querySelector('#content3').value
+                this.createPost(categoryId, value1, value2, value3)
+            })
         }
     }
+    // CREATE POST
+    createPost(categoryId, value1, value2, value3) {
+        //console.log(value1, value2, value3)
+        this.adapter.createPost(categoryId, value1, value2, value3).then(post => {
+            const thePost = post.data.attributes
+            const newPost = new Post(thePost)
 
-    createPost(value1, value2, value3) {
-        //e.preventDefault()
-        console.log(value1, value2, value3)
-
+            document.querySelector('#content1').value = ''
+            document.querySelector('#content2').value = ''
+            document.querySelector('#content3').value = ''
+            this.postsContainer.innerHTML += newPost.renderLi()
+        })
     }
-
-    // createPost(e) {
-    //     e.preventDefault()
-    //     //let select = document.getElementById('categories')
-    //     //const selectCat = this.select.options[this.select.selectedIndex].value
-    //     const value1 = this.newPostContent1.value
-    //     const value2 = this.newPostContent2.value
-    //     const value3 = this.newPostContent3.value
-
-    //     this.adapter.createPost(value1, value2, value3).then(post => {
-    //         this.posts.push(new Post(post))
-    //         this.newPostContent1.value = ''
-    //         this.newPostContent2.value = ''
-    //         this.newPostContent3.value = ''
-    //         this.render()
-    //     })
-    // }
 
     // INITIAL FETCH
     fetchAndLoadPosts() {
@@ -81,7 +80,7 @@ class Posts {
         })
     }
 
-    render() {
-        this.postsContainer.innerHTML = this.posts.map(post => post.renderLi()).join('')
-    }
+    // render() {
+    //     this.postsContainer.innerHTML = this.posts.map(post => post.renderLi()).join('')
+    // }
 }
