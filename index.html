@@ -10,10 +10,10 @@
 <body>
     <div>
         <h1>Welcome to Guided Journal</h1>
-        <h2>Choose your journal entry type for today:</h2>
 
         <div>
             <form id="newpost-form">
+                <h2>Choose your journal entry type for today: </h2>
                 <select name="categories" id="categories">
                     <option value="" disabled="" selected="" hidden="">--Please choose an option--</option>
                     <option value="1">Daily Life</option>
@@ -23,25 +23,14 @@
                 <!-- <form id="newpost-form"></form> -->
                 <!-- <label>Date: </label>
                 <input type="text" name="date" id="date"><br><br> -->
-                <!-- <fieldset>
-                    <legend>I am grateful for: </legend>
-                    <textarea name="content1" maxlength="200" rows="4" id="content1"></textarea></br>
-                </fieldset>
-                <fieldset>
-                    <legend>Daily Affirmation </legend>
-                    <textarea name="content2" maxlength="200" rows="4" id="content2"></textarea></br>
-                </fieldset>
-                <fieldset>
-                    <legend>How could I have made today better? </legend>
-                    <textarea name="content3" maxlength="200" rows="4" id="content3"></textarea></br>
-                </fieldset>
-                <input type="submit" value="Submit"> -->
             </form>
+
             <div id="post-content">
                 <ul id="posts-container">
 
                 </ul>
             </div>
+
         </div>
     </div>
     <script src="src/components/post.js"></script>

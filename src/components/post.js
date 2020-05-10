@@ -1,5 +1,4 @@
 class Post {
-
     constructor(postJSON) {
         this.id = postJSON.id
         this.categoryId = postJSON.category_id
@@ -11,7 +10,7 @@ class Post {
     }
 
     renderLi() {
-        return `<li>${this.content1}<br> ${this.content2}<br> ${this.content3}</li>`
+        return `<li>${this.content1}<br> ${this.content2}<br> ${this.content3}</li><br>`
     }
 
     static renderSelfCare() {
@@ -26,7 +25,7 @@ class Post {
             <fieldset>
                 <legend>How could I have made today better? </legend>
                 <textarea name="content3" maxlength="200" rows="4" id="content3"></textarea>
-            </fieldset>
+            </fieldset><br>
             <input type="submit" value="Submit"></input>`
     }
 
@@ -42,7 +41,7 @@ class Post {
             <fieldset>
                 <legend>How much did I spend today? </legend>
                 <textarea name="content3" maxlength="200" rows="4" id="content3"></textarea>
-            </fieldset>
+            </fieldset><br>
             <input type="submit" value="Submit"></input>`
     }
     static renderGoal() {
@@ -57,7 +56,7 @@ class Post {
             <fieldset>
                 <legend>What is my inspiration for today? </legend>
                 <textarea name="content3" maxlength="200" rows="4" id="content3"></textarea>
-            </fieldset>
+            </fieldset><br>
             <input type="submit" value="Submit"></input>`
     }
 
