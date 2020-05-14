@@ -1,16 +1,27 @@
 class Post {
     constructor(postJSON) {
         this.id = postJSON.id
+        debugger
         this.categoryId = postJSON.category_id
         this.date = postJSON.date
         this.content1 = postJSON.content1
         this.content2 = postJSON.content2
         this.content3 = postJSON.content3
         this.likes = postJSON.likes
+        Post.all.push(this)
     }
 
     renderLi() {
-        return `<li>${this.content1}<br> ${this.content2}<br> ${this.content3}</li><br>`
+        return `
+        <li>${this.content1}<br> 
+            ${this.content2}<br> 
+            ${this.content3}<br>
+            <button data-id=${this.id}>edit</button>
+        </li><br>`
+    }
+
+    static findById(id) {
+        return this.all.find(post => post.id === id);
     }
 
     static renderSelfCare() {
@@ -61,4 +72,6 @@ class Post {
     }
 
 }
+
+Post.all = [];
 

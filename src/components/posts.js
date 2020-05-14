@@ -12,11 +12,12 @@ class Posts {
         //console.log(this.newPostContent1)
         //this.newPostContent2 = document.querySelector('#content2')
         //this.newPostContent3 = document.querySelector('#content3')
+        this.postForm = document.querySelector('#newpost-form')
 
         this.select = document.getElementById('categories')
         this.select.addEventListener('change', this.selectHandler.bind(this))
 
-        this.postForm = document.querySelector('#newpost-form')
+        this.postsContainer.addEventListener('click', this.editPost.bind(this))
     }
 
     // EVENT LISTENER FOR RENDERING A SPECIFIC FORM BASED ON CATEGORY CHOSEN
@@ -58,13 +59,23 @@ class Posts {
         //console.log(value1, value2, value3)
         this.adapter.createPost(categoryId, value1, value2, value3).then(post => {
             const thePost = post.data.attributes
-            const newPost = new Post(thePost)
+            let newPost = new Post(thePost)
 
             document.querySelector('#content1').value = ''
             document.querySelector('#content2').value = ''
             document.querySelector('#content3').value = ''
             this.postsContainer.innerHTML += newPost.renderLi()
+            debugger;
         })
+    }
+
+    //EDIT POST
+    editPost(e) {
+        const id = parseInt(e.target.dataset.id)
+        const post = Post.findById(id)
+
+        //console.log(e.target)
+        //debugger;
     }
 
     // INITIAL FETCH
