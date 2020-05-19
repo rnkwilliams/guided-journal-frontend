@@ -7,17 +7,16 @@ class Posts {
     }
 
     initBindingAndEventListeners() {
-        this.postsContainer = document.querySelector('#posts-container')
-        //this.newPostContent1 = document.querySelector('#content1')
-        //console.log(this.newPostContent1)
-        //this.newPostContent2 = document.querySelector('#content2')
-        //this.newPostContent3 = document.querySelector('#content3')
         this.postForm = document.querySelector('#newpost-form')
+
+        this.updatePost = document.querySelector('#update-post')
+        this.updatePost.addEventListener('submit', this.updateFormHandler.bind(this))
 
         this.select = document.getElementById('categories')
         this.select.addEventListener('change', this.selectHandler.bind(this))
 
-        this.postsContainer.addEventListener('click', this.editPost.bind(this))
+        this.postsContainer = document.querySelector('#posts-container')
+        this.postsContainer.addEventListener('click', this.editButton.bind(this))
     }
 
     // EVENT LISTENER FOR RENDERING A SPECIFIC FORM BASED ON CATEGORY CHOSEN
@@ -59,32 +58,43 @@ class Posts {
         //console.log(value1, value2, value3)
         this.adapter.createPost(categoryId, value1, value2, value3).then(post => {
             const thePost = post.data.attributes
-            let newPost = new Post(thePost)
+            const postId = post.data.id
+            const newPost = new Post(postId, thePost)
 
             document.querySelector('#content1').value = ''
             document.querySelector('#content2').value = ''
             document.querySelector('#content3').value = ''
             this.postsContainer.innerHTML += newPost.renderLi()
-            debugger;
         })
     }
 
-    //EDIT POST
-    editPost(e) {
-        const id = parseInt(e.target.dataset.id)
-        const post = Post.findById(id)
+    // EDIT POST
+    editButton(e) {
+        const id = e.target.dataset.id
+        const post = Post.findById(id);
+        const hideNewForm = document.querySelector('#newpost-form')
 
-        //console.log(e.target)
-        //debugger;
+        this.updatePost.innerHTML = post.renderUpdateForm()
+        hideNewForm.style.display = "none";
     }
 
-    // INITIAL FETCH
+    updateFormHandler(e) {
+        e.preventDefault()
+        const id = e.target.dataset.id
+        const post = Post.findById(id)
+        const value1 = document.querySelector('#input-content1').value
+        const value2 = document.querySelector('#input-content2').value
+        const value3 = document.querySelector('#input-content3').value
+        debugger
+        this.adapter.patchPost(post, value1, value2, value3)
+    }
+
+    // INITIAL FETCH GET POSTS
     fetchAndLoadPosts() {
         this.adapter.getPosts().then(posts => {
             //console.log(posts.data)
             posts.data.forEach(post => {
-                const thePost = post.attributes
-                const newPost = new Post(thePost)
+                const newPost = new Post(post, post.attributes)
                 //console.log(newPost)
                 this.postsContainer.innerHTML += newPost.renderLi()
             })
