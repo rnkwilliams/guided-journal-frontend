@@ -22,6 +22,13 @@ class Post {
         </li><br>`
     }
 
+    updatePost({ value1, value2, value3, category_id }) {
+        this.content1 = value1
+        this.content2 = value2
+        this.content3 = value3
+        this.categoryId = category_id
+    }
+
     renderUpdateForm() {
         if (this.categoryId === 2) {
             return `
@@ -40,7 +47,7 @@ class Post {
                 <textarea name="content3" maxlength="200" rows="4" id="input-content3">${this.content3}</textarea>
           </fieldset><br>
                 <input type="submit" value="Edit Entry"></input>
-        </form><br><br>`
+        </form><br>`
         } else if (this.categoryId === 1) {
             return `<form data-id=${this.id} >
             <h3>Edit Journal Entry</h3>
@@ -57,7 +64,7 @@ class Post {
             <textarea name="content3" maxlength="200" rows="4" id="input-content3">${this.content3}</textarea>
         </fieldset><br>
             <input type="submit" value="Edit Entry"></input>
-            </form>`
+            </form></br>`
         } else {
             return `<form data-id=${this.id} >
             <h3>Edit Journal Entry</h3>

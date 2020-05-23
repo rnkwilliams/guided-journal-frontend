@@ -25,21 +25,22 @@ class PostsAdapter {
             .then(res => res.json())
     }
 
-    patchPost(post, value1, value2, value3) {
-        const postData = {
+    updatePost(postId, value1, value2, value3, category_id) {
+        //debugger
+        const post = {
             content1: value1,
             content2: value2,
             content3: value3,
+            category_id: category_id,
         }
-        return fetch(`this.baseUrl/${post.id}`, {
+        return fetch(`${this.baseUrl}/${postId}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
                 Accept: 'application/json',
             },
-            body: JSON.stringify({ postData }),
+            body: JSON.stringify({ post }),
         })
             .then(res => res.json())
-            .then(updatedPost => console.log(updatedPost));
     }
 }

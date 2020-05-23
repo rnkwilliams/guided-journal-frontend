@@ -1,6 +1,5 @@
 class Posts {
     constructor() {
-        this.posts = []
         this.adapter = new PostsAdapter()
         this.initBindingAndEventListeners()
         this.fetchAndLoadPosts()
@@ -85,23 +84,27 @@ class Posts {
         const value1 = document.querySelector('#input-content1').value
         const value2 = document.querySelector('#input-content2').value
         const value3 = document.querySelector('#input-content3').value
-        debugger
-        this.adapter.patchPost(post, value1, value2, value3)
+        const category_id = post.category.id
+
+        this.adapter.updatePost(post.id, value1, value2, value3, category_id)
+            .then(updatedPost => {
+                debugger
+                const post = Post.findById(updatedPost.id)
+                const postUpdate = post.update(updatedPost)
+                this.postsContainer.innerHTML = postUpdate.renderLi()
+
+            })
     }
 
     // INITIAL FETCH GET POSTS
     fetchAndLoadPosts() {
         this.adapter.getPosts().then(posts => {
             //console.log(posts.data)
-            posts.data.forEach(post => {
+            posts.data.sort((a, b) => a.id - b.id).forEach(post => {
                 const newPost = new Post(post, post.attributes)
                 //console.log(newPost)
                 this.postsContainer.innerHTML += newPost.renderLi()
             })
         })
     }
-
-    // render() {
-    //     this.postsContainer.innerHTML = this.posts.map(post => post.renderLi()).join('')
-    // }
 }
