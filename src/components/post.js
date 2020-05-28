@@ -22,34 +22,45 @@ class Post {
         </li><br>`
     }
 
-    updatePost({ value1, value2, value3, category_id }) {
-        this.content1 = value1
-        this.content2 = value2
-        this.content3 = value3
+    update({ content1, content2, content3, category_id }) {
+        //debugger
+        this.content1 = content1
+        this.content2 = content2
+        this.content3 = content3
         this.categoryId = category_id
     }
 
     renderUpdateForm() {
-        if (this.categoryId === 2) {
-            return `
-        <form data-id=${this.id} >
-          <h3>Edit Journal Entry</h3>
-          <fieldset>
-            <legend>I am grateful for: </legend>
-            <textarea name="content1" maxlength="200" rows="4" id="input-content1">${this.content1}</textarea>
-          </fieldset>
-          <fieldset>
-            <legend>Daily Affirmation </legend>
-            <textarea name="content2" maxlength="200" rows="4" id="input-content2">${this.content2}</textarea>
-          </fieldset>
-          <fieldset>
-            <legend>How could I have made today better? </legend>
-            <textarea name="content3" maxlength="200" rows="4" id="input-content3">${this.content3}</textarea>
-          </fieldset>
-            <input class="btn" type="submit" value="Edit Entry"></input>
-        </form><br>`
-        } else if (this.categoryId === 1) {
-            return `<form data-id=${this.id} >
+        if (this.categoryId === 1) {
+            return this.updateDailyCare();
+        } else if (this.categoryId === 2) {
+            return this.updateSelfCare();
+        } else {
+            return this.updateGoalSetting();
+        }
+    }
+
+    updateSelfCare() {
+        return `<form data-id=${this.id} >
+        <h3>Edit Journal Entry</h3>
+        <fieldset>
+          <legend>I am grateful for: </legend>
+          <textarea name="content1" maxlength="200" rows="4" id="input-content1">${this.content1}</textarea>
+        </fieldset>
+        <fieldset>
+          <legend>Daily Affirmation </legend>
+          <textarea name="content2" maxlength="200" rows="4" id="input-content2">${this.content2}</textarea>
+        </fieldset>
+        <fieldset>
+          <legend>How could I have made today better? </legend>
+          <textarea name="content3" maxlength="200" rows="4" id="input-content3">${this.content3}</textarea>
+        </fieldset>
+          <input class="btn" type="submit" value="Edit Entry"></input>
+      </form><br>`
+    }
+
+    updateDailyCare() {
+        return `<form data-id=${this.id} >
             <h3>Edit Journal Entry</h3>
             <fieldset>
             <legend>How was your mental state today? </legend>
@@ -65,8 +76,10 @@ class Post {
         </fieldset>
             <input class="btn" type="submit" value="Edit Entry"></input>
             </form></br>`
-        } else {
-            return `<form data-id=${this.id} >
+    }
+
+    updateGoalSetting() {
+        return `<form data-id=${this.id} >
             <h3>Edit Journal Entry</h3>
             <fieldset>
                         <legend>Today I commit to: </legend>
@@ -81,7 +94,6 @@ class Post {
                         <textarea name="content3" maxlength="200" rows="4" id="input-content3">${this.content3}</textarea>
                     </fieldset>
                         <input class="btn" type="submit" value="Edit Entry"></input>`
-        }
     }
 
     static findById(id) {

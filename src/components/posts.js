@@ -15,46 +15,32 @@ class Posts {
         this.select.addEventListener('change', this.selectHandler.bind(this))
 
         this.postsContainer = document.querySelector('#posts-container')
-        this.postsContainer.addEventListener('click', this.editButton.bind(this))
+        this.postsContainer.addEventListener('click', this.editButtonHandler.bind(this))
     }
 
     // EVENT LISTENER FOR RENDERING A SPECIFIC FORM BASED ON CATEGORY CHOSEN
     selectHandler(e) {
         const categoryId = e.target.value
-        //console.log(categoryId)
+
         if (categoryId == '2') {
             this.postForm.innerHTML = Post.renderSelfCare();
-            this.postForm.addEventListener('submit', (e) => {
-                e.preventDefault()
-                const value1 = document.querySelector('#content1').value
-                const value2 = document.querySelector('#content2').value
-                const value3 = document.querySelector('#content3').value
-                this.createPost(categoryId, value1, value2, value3)
-            })
-
         } else if (categoryId == '1') {
             this.postForm.innerHTML = Post.renderDailyCare();
-            this.postForm.addEventListener('submit', (e) => {
-                e.preventDefault()
-                const value1 = document.querySelector('#content1').value
-                const value2 = document.querySelector('#content2').value
-                const value3 = document.querySelector('#content3').value
-                this.createPost(categoryId, value1, value2, value3)
-            })
         } else {
             this.postForm.innerHTML = Post.renderGoal();
-            this.postForm.addEventListener('submit', (e) => {
-                e.preventDefault()
-                const value1 = document.querySelector('#content1').value
-                const value2 = document.querySelector('#content2').value
-                const value3 = document.querySelector('#content3').value
-                this.createPost(categoryId, value1, value2, value3)
-            })
         }
+
+        this.postForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const value1 = document.querySelector('#content1').value
+            const value2 = document.querySelector('#content2').value
+            const value3 = document.querySelector('#content3').value
+            this.createPost(categoryId, value1, value2, value3)
+        })
     }
+
     // CREATE POST
     createPost(categoryId, value1, value2, value3) {
-        //console.log(value1, value2, value3)
         this.adapter.createPost(categoryId, value1, value2, value3).then(post => {
             const thePost = post.data.attributes
             const postId = post.data.id
@@ -67,8 +53,8 @@ class Posts {
         })
     }
 
-    // EDIT POST
-    editButton(e) {
+    // EDIT BUTTON
+    editButtonHandler(e) {
         const id = e.target.dataset.id
         const post = Post.findById(id);
         const hideNewForm = document.querySelector('#newpost-form')
@@ -77,6 +63,7 @@ class Posts {
         hideNewForm.style.display = "none";
     }
 
+    // UPDATE FORM
     updateFormHandler(e) {
         e.preventDefault()
         const id = e.target.dataset.id
@@ -88,12 +75,21 @@ class Posts {
 
         this.adapter.updatePost(post.id, value1, value2, value3, category_id)
             .then(updatedPost => {
-                debugger
-                const post = Post.findById(updatedPost.id)
-                const postUpdate = post.update(updatedPost)
-                this.postsContainer.innerHTML = postUpdate.renderLi()
-
+                post.update(updatedPost)
+                document.querySelector('#input-content1').value = ''
+                document.querySelector('#input-content2').value = ''
+                document.querySelector('#input-content3').value = ''
+                //this.updatePost.style.display = "none";
+                //this.postForm.style.display = "block";
+                this.addNotes();
             })
+    }
+
+    addNotes() {
+        this.postsContainer.innerHTML = '';
+        Post.all.forEach(
+            post => (this.postsContainer.innerHTML += post.renderLi())
+        );
     }
 
     // INITIAL FETCH GET POSTS
