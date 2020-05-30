@@ -11,7 +11,6 @@ class Post {
     }
 
     renderLi() {
-        //debugger
         return `
         <li data-id=${this.id}>
             <span>${this.category.name}</span><br>
@@ -23,7 +22,6 @@ class Post {
     }
 
     update({ content1, content2, content3, category_id }) {
-        //debugger
         this.content1 = content1
         this.content2 = content2
         this.content3 = content3
