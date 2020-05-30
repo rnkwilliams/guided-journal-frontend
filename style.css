@@ -58,6 +58,7 @@ textarea {
     color: white;
     border-radius: 5px;
     padding: 8px;
+    margin: 10px;
 }
 
 #posts-container{
@@ -70,9 +71,10 @@ textarea {
     background: #fff;
     padding: 20px;
     margin-bottom: 15px;
+    margin-left: 15px;
     justify-content: center;
     text-align: center;
-
+    float: left;
 }
 
 #posts-container span {
