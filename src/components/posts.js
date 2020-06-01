@@ -42,9 +42,7 @@ class Posts {
     // CREATE POST
     createPost(categoryId, value1, value2, value3) {
         this.adapter.createPost(categoryId, value1, value2, value3).then(post => {
-            const thePost = post.data.attributes
-            const postId = post.data.id
-            const newPost = new Post(postId, thePost)
+            const newPost = new Post(post.data.id, post.data.attributes)
 
             document.querySelector('#content1').value = ''
             document.querySelector('#content2').value = ''
@@ -81,11 +79,12 @@ class Posts {
                 document.querySelector('#input-content3').value = ''
                 //this.updatePost.style.display = "none";
                 //this.postForm.style.display = "block";
-                this.addNotes();
+                this.addPosts();
             })
     }
 
-    addNotes() {
+    addPosts() {
+        //Clears innerHTML when function is called to avoid duplication of posts
         this.postsContainer.innerHTML = '';
         Post.all.forEach(
             post => (this.postsContainer.innerHTML += post.renderLi())
@@ -95,10 +94,8 @@ class Posts {
     // INITIAL FETCH GET POSTS
     fetchAndLoadPosts() {
         this.adapter.getPosts().then(posts => {
-            //console.log(posts.data)
             posts.data.sort((a, b) => a.id - b.id).forEach(post => {
                 const newPost = new Post(post, post.attributes)
-                //console.log(newPost)
                 this.postsContainer.innerHTML += newPost.renderLi()
             })
         })
