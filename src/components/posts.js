@@ -8,6 +8,10 @@ class Posts {
     initBindingAndEventListeners() {
         this.postForm = document.querySelector('#newpost-form')
 
+        this.searchForm = document.querySelector('#search-form')
+        this.searchForm.addEventListener('submit', this.filterFormHandler.bind(this))
+
+
         this.updatePost = document.querySelector('#update-post')
         this.updatePost.addEventListener('submit', this.updateFormHandler.bind(this))
 
@@ -59,6 +63,17 @@ class Posts {
 
         this.updatePost.innerHTML = post.renderUpdateForm()
         hideNewForm.style.display = "none";
+    }
+
+    filterFormHandler(e) {
+        e.preventDefault()
+        const input = e.target.search.value
+        const casedInput = input.toLowerCase()
+
+        const filteredPosts = Post.all.filter(post =>
+            post.category.name.toLowerCase() == casedInput)
+
+        this.postsContainer.innerHTML = filteredPosts.map(post => post.renderLi()).join("")
     }
 
     // UPDATE FORM
