@@ -22,14 +22,24 @@ class Posts {
         this.postsContainer.addEventListener('click', this.editButtonHandler.bind(this))
     }
 
-    // EVENT LISTENER FOR RENDERING A SPECIFIC FORM BASED ON CATEGORY CHOSEN
+    //FETCH POSTS
+    fetchAndLoadPosts() {
+        this.adapter.getPosts().then(posts => {
+            posts.data.sort((a, b) => a.id - b.id).forEach(post => {
+                const newPost = new Post(post, post.attributes)
+                this.postsContainer.innerHTML += newPost.renderLi()
+            })
+        })
+    }
+
+    //SELECT FORM
     selectHandler(e) {
         const categoryId = e.target.value
 
-        if (categoryId == '2') {
-            this.postForm.innerHTML = Post.renderSelfCare();
-        } else if (categoryId == '1') {
+        if (categoryId === '1') {
             this.postForm.innerHTML = Post.renderDailyCare();
+        } else if (categoryId === '2') {
+            this.postForm.innerHTML = Post.renderSelfCare();
         } else {
             this.postForm.innerHTML = Post.renderGoal();
         }
@@ -43,7 +53,7 @@ class Posts {
         })
     }
 
-    // CREATE POST
+    //CREATE POST
     createPost(categoryId, value1, value2, value3) {
         this.adapter.createPost(categoryId, value1, value2, value3).then(post => {
             const newPost = new Post(post.data.id, post.data.attributes)
@@ -55,7 +65,7 @@ class Posts {
         })
     }
 
-    // EDIT BUTTON
+    //EDIT BUTTON
     editButtonHandler(e) {
         const id = e.target.dataset.id
         const post = Post.findById(id);
@@ -65,6 +75,7 @@ class Posts {
         hideNewForm.style.display = "none";
     }
 
+    //SEARCH FILTER
     filterFormHandler(e) {
         e.preventDefault()
         const input = e.target.search.value
@@ -76,7 +87,7 @@ class Posts {
         this.postsContainer.innerHTML = filteredPosts.map(post => post.renderLi()).join("")
     }
 
-    // UPDATE FORM
+    //UPDATE FORM
     updateFormHandler(e) {
         e.preventDefault()
         const id = e.target.dataset.id
@@ -92,27 +103,14 @@ class Posts {
                 document.querySelector('#input-content1').value = ''
                 document.querySelector('#input-content2').value = ''
                 document.querySelector('#input-content3').value = ''
-                //this.updatePost.style.display = "none";
-                //this.postForm.style.display = "block";
-                this.addPosts();
+                this.clearAddPosts();
             })
     }
 
-    addPosts() {
-        //Clears innerHTML when function is called to avoid duplication of posts
+    clearAddPosts() {
         this.postsContainer.innerHTML = '';
         Post.all.forEach(
             post => (this.postsContainer.innerHTML += post.renderLi())
         );
-    }
-
-    // INITIAL FETCH GET POSTS
-    fetchAndLoadPosts() {
-        this.adapter.getPosts().then(posts => {
-            posts.data.sort((a, b) => a.id - b.id).forEach(post => {
-                const newPost = new Post(post, post.attributes)
-                this.postsContainer.innerHTML += newPost.renderLi()
-            })
-        })
     }
 }
