@@ -12,6 +12,9 @@ Enjoy!
 ## Screenshots 📷
 
 ![Alt text](./screenshots/GuidedJournal.png?raw=true "home")
+![Alt text](./screenshots/SelfCare.png?raw=true "home")
+![Alt text](./screenshots/DailyLife.png?raw=true "home")
+![Alt text](./screenshots/GoalSetting.png?raw=true "home")
 
 # Built With 🛠
 
